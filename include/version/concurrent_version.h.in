@@ -1,0 +1,18 @@
+#pragma once
+
+/**
+ * @file CONCURRENT_version.h.in
+ * @brief 由 CMake configure_file 生成的版本宏头文件
+ * @note
+ *   - 构建树路径：${CMAKE_CURRENT_BINARY_DIR}/include/version/CONCURRENT_version.h
+ *   - 安装树路径：${CMAKE_INSTALL_INCLUDEDIR}/version/CONCURRENT_version.h
+ * @code{.cpp}
+ *   #include <version/CONCURRENT_version.h>
+ *   std::cout << CONCURRENT_VERSION_STR; // "1.0.0"
+ * @endcode
+ */
+
+#define CONCURRENT_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define CONCURRENT_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define CONCURRENT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define CONCURRENT_VERSION_STR   "@PROJECT_VERSION@"
