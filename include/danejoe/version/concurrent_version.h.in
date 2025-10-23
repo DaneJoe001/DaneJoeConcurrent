@@ -1,13 +1,13 @@
 #pragma once
 
 /**
- * @file CONCURRENT_version.h.in
+ * @file concurrent_version.h.in
  * @brief 由 CMake configure_file 生成的版本宏头文件
  * @note
- *   - 构建树路径：${CMAKE_CURRENT_BINARY_DIR}/include/version/CONCURRENT_version.h
- *   - 安装树路径：${CMAKE_INSTALL_INCLUDEDIR}/version/CONCURRENT_version.h
+ *   - 构建树路径：${CMAKE_CURRENT_BINARY_DIR}/include/version/concurrent_version.h
+ *   - 安装树路径：${CMAKE_INSTALL_INCLUDEDIR}/version/concurrent_version.h
  * @code{.cpp}
- *   #include <version/CONCURRENT_version.h>
+ *   #include <version/concurrent_version.h>
  *   std::cout << CONCURRENT_VERSION_STR; // "1.0.0"
  * @endcode
  */

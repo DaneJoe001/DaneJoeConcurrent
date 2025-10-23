@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(DaneJoeConcurrent VERSION 0.1.0 LANGUAGES CXX)
+project(DaneJoeConcurrent VERSION 0.1.1 LANGUAGES CXX)
 option(DANEJOE_CONCURRENT_BUILD_TESTS "Build tests for DaneJoeConcurrent" ON)
 
 # Header-only (INTERFACE) for now; expose includes to consumers

@@ -4,7 +4,7 @@
  * @file mpmc_bounded_queue.hpp
  * @author DaneJoe (danejoe001.github)
  * @brief 线程安全的队列
- * @version 0.1
+ * @version 0.1.1
  * @date 2025-09-04
  * @copyright Copyright (c) 2025
  */
@@ -24,8 +24,14 @@
  */
 namespace DaneJoe
 {
+    /**
+     * @namespace Concurrent
+     */
     namespace Concurrent
     {
+        /**
+         * @namespace Blocking
+         */
         namespace Blocking
         {
             /**
@@ -43,6 +49,7 @@ namespace DaneJoe
                 MpmcBoundedQueue(int max_size = 50) : m_max_size(max_size) {}
                 /**
                  * @brief 弹出队首元素
+                 * @return std::optional<T> 弹出的元素，若队列为空则返回std::nullopt
                  */
                 std::optional<T> pop()
                 {
@@ -61,6 +68,11 @@ namespace DaneJoe
                     m_full_cv.notify_one();
                     return item;
                 }
+                /**
+                 * @brief 批量弹出队首元素
+                 * @param nums 要弹出的元素数量
+                 * @return std::optional<std::vector<T>> 批量弹出的元素，若队列为空则返回std::nullopt
+                 */
                 std::optional<std::vector<T>> pop(int nums)
                 {
                 
@@ -87,6 +99,7 @@ namespace DaneJoe
                 }
                 /**
                  * @brief 尝试弹出队首元素
+                 * @return std::optional<T> 弹出的元素，若队列为空则返回std::nullopt
                  */
                 std::optional<T> try_pop()
                 {
@@ -102,8 +115,10 @@ namespace DaneJoe
                     return item;
                 }
                 /**
-                * @brief 尝试打包弹出元素
-                */
+                 * @brief 尝试打包弹出元素
+                 * @param nums 要弹出的元素数量
+                 * @return std::vector<T> 批量弹出的元素
+                 */
                 std::vector<T> try_pop(std::size_t nums)
                 {
                     std::unique_lock<std::mutex> lock(m_mutex);
@@ -127,7 +142,7 @@ namespace DaneJoe
                  * @brief 等待弹出队首元素
                  * @tparam Period 等待时间类型
                  * @param timeout 等待时间
-                 * @return std::optional<T>
+                 * @return std::optional<T> 弹出的元素，若队列为空则返回std::nullopt
                  */
                 template<class Period>
                 std::optional<T> pop_until(Period timeout)
@@ -151,7 +166,7 @@ namespace DaneJoe
                  * @brief 等待弹出队首元素
                  * @tparam Period 等待时间类型
                  * @param timeout 等待时间
-                 * @return std::optional<T>
+                 * @return std::optional<T> 弹出的元素，若队列为空则返回std::nullopt
                  */
                 template<class Period>
                 std::optional<T> pop_for(Period timeout)
@@ -173,6 +188,7 @@ namespace DaneJoe
                 }
                 /**
                  * @brief 判断队列是否为空
+                 * @return bool 队列是否为空
                  */
                 bool empty()const
                 {
@@ -181,6 +197,7 @@ namespace DaneJoe
                 }
                 /**
                  * @brief 判断队列是否已满
+                 * @return bool 队列是否已满
                  */
                 bool full()const
                 {
@@ -189,6 +206,7 @@ namespace DaneJoe
                 }
                 /**
                  * @brief 获取队列大小
+                 * @return std::size_t 队列大小
                  */
                 std::size_t size()const
                 {
@@ -197,6 +215,7 @@ namespace DaneJoe
                 }
                 /**
                  * @brief 判断队列是否正在运行
+                 * @return bool 队列是否正在运行
                  */
                 bool is_running()const
                 {
@@ -206,7 +225,7 @@ namespace DaneJoe
                 /**
                  * @brief 获取队首元素
                  * @note 模板元素需要可拷贝
-                 * @return std::optional<T>
+                 * @return std::optional<T> 队首元素，若队列为空则返回std::nullopt
                  */
                 std::optional<T> front()const
                 {
@@ -225,7 +244,7 @@ namespace DaneJoe
                 /**
                  * @brief 添加元素到队列
                  * @param item 元素
-                 * @return bool
+                 * @return bool 是否成功添加
                  */
                 bool push(T item)
                 {
@@ -252,6 +271,13 @@ namespace DaneJoe
                     }
                     return is_pushed;
                 }
+                /**
+                 * @brief 添加元素到队列
+                 * @tparam U 元素类型
+                 * @param begin 元素起始迭代器
+                 * @param end 元素结束迭代器
+                 * @return bool 是否成功添加
+                 */
                 template<typename U>
                 bool push(U begin, U end)
                 {
